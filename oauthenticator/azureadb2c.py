@@ -26,6 +26,7 @@ class AzureAdB2COAuthenticator(OAuthenticator):
 	)
 
     tenant_id = Unicode(config=True, help="The Azure Active Directory B2C Tenant ID of the format: yourb2ctenantname.onmicrosoft.com")
+    tenant_id_short = Unicode(config=True, help="The Azure Active Directory B2C Tenant ID short form: eg, if long form is asdf.onmicrosoft.com, this would be asdf. This will be automatically generated from tenant_id if not set.")
     b2c_profile_name = Unicode(config=True, help="The Azure Active Directory B2C Profile Name (eg: B2C_1A_SignUpOrSignInWithAAD")
 
     @default('tenant_id')

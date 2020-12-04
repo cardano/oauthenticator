@@ -99,6 +99,6 @@ class AzureAdB2COAuthenticator(OAuthenticator):
         return userdict
 
 
-class LocalAzureAdB2COAuthenticator(LocalAuthenticator, AzureAdOB2CAuthenticator):
+class LocalAzureAdB2COAuthenticator(LocalAuthenticator, AzureAdB2COAuthenticator):
     """A version that mixes in local system user creation"""
     pass

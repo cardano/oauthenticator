@@ -8,6 +8,7 @@ import os
 import urllib
 
 from tornado.auth import OAuth2Mixin
+from tornado.httpclient import HTTPClientError
 from tornado.log import app_log
 from tornado.httpclient import HTTPRequest, AsyncHTTPClient
 
@@ -82,7 +83,26 @@ class AzureAdB2COAuthenticator(OAuthenticator):
             body=data  # Body is required for a POST...
         )
 
-        resp = await http_client.fetch(req)
+        app_log.info("About to POST to token url: %s", url)
+        app_log.info("Headers are: %s", headers)
+        app_log.info("POST body data is: %s", data)
+
+        try:
+            resp = await http_client.fetch(req)
+        except HTTPClientError as e:
+            app_log.error("HTTPClientError thrown during POST to token url")
+            
+            if e.code is None:
+                app_log.error("Exception code is None")
+            else:
+                app_log.error("Exception HTTPResponse code is: %s", e.code)
+            
+            if e.response is None:
+                app_log.error("Exception HTTPResponse object is None")
+            else:
+                app_log.error("Exception HTTPResponse reason is: %s", e.response.reason)
+                app_log.error("Exception HTTPResponse body is: %s", e.response.body)
+
         resp_json = json.loads(resp.body.decode('utf8', 'replace'))
 
         # app_log.info("Response %s", resp_json)

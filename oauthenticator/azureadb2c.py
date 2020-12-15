@@ -62,7 +62,7 @@ class AzureAdB2COAuthenticator(OAuthenticator):
 
         params = dict(
             client_id=self.client_id,
-            client_secret=self.client_secret,
+            #client_secret=self.client_secret,
             grant_type='authorization_code',
             code=code,
             redirect_uri=self.get_callback_url(handler))
